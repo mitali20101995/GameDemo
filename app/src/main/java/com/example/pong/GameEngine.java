@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Point;
 import android.graphics.Rect;
 import android.support.constraint.solver.widgets.Rectangle;
 import android.util.Log;
@@ -42,7 +43,7 @@ public class GameEngine extends SurfaceView implements Runnable {
     Canvas canvas;
     Paint paintbrush;
 
-
+    Point ballPosition;
 
     // -----------------------------------
     // ## GAME SPECIFIC VARIABLES
@@ -55,6 +56,8 @@ public class GameEngine extends SurfaceView implements Runnable {
     // ----------------------------
     // ## GAME STATS - number of lives, score, etc
     // ----------------------------
+
+
 
 
     public GameEngine(Context context, int w, int h) {
@@ -74,6 +77,13 @@ public class GameEngine extends SurfaceView implements Runnable {
         // This is optional. Use it to:
         //  - setup or configure your sprites
         //  - set the initial position of your sprites
+
+
+        Point ballPosition = new Point();
+        ballPosition.x = this.screenWidth / 2;
+        ballPosition.y = this.screenHeight / 2;
+
+        Point paddlePosition = new Point();
 
 
         // @TODO: Any other game setup stuff goes here
@@ -130,6 +140,7 @@ public class GameEngine extends SurfaceView implements Runnable {
     public void updatePositions() {
         // @TODO: Update the position of the sprites
 
+        ballPosition.y = ballPosition.y + 10;
         // @TODO: Collision detection code
 
     }
@@ -148,6 +159,18 @@ public class GameEngine extends SurfaceView implements Runnable {
 
 
             //@TODO: Draw the sprites (rectangle, circle, etc)
+
+            int left = ballPosition.x;
+            int top = ballPosition.y;
+            int right = 0;
+            int bottom = 0;
+            canvas.drawRect(left, top, right, bottom, paintbrush);
+
+            int paddleLeft = (this.screenWidth / 2) - 100;
+            int paddleTop = (this.screenHeight - 350 - 20);
+            int padleRight = (this.screenWidth / 2) + 100;
+            int paddleBottom = (this.screenHeight - 350);
+            canvas.drawRect(paddleLeft, paddleTop, padleRight, paddleBottom, paintbrush);
 
             //@TODO: Draw game statistics (lives, score, etc)
             paintbrush.setTextSize(60);
